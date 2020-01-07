@@ -1,0 +1,22 @@
+{
+  "instructors": [
+    {
+      "id": 1,
+      "name": "Sara Gomes do Nascimento Santana",
+      "avatar_url": "https://www.google.com/",
+      "birth": 1578096000000,
+      "gender": "M",
+      "services": "ssdsds",
+      "created_at": 1578414391412
+    },
+    {
+      "id": 2,
+      "avatar_url": "https://www.google.com/",
+      "name": "danilo",
+      "birth": 1578009600000,
+      "gender": "M",
+      "services": "ssdsds",
+      "created_at": 1578414425798
+    }
+  ]
+}
