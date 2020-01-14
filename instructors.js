@@ -1,6 +1,6 @@
 const fs = require('fs')
 const data = require('./data.json')
-const { age } = require('./utils')
+const { age, date } = require('./utils')
 const Intl = require('intl')
 
 // show
@@ -44,8 +44,6 @@ exports.post = function(req,res) {
     const created_at = Date.now()
     const id = Number(data.instructors.length + 1)
 
-
-    
     data.instructors.push({ 
         id,
         avatar_url,
@@ -59,7 +57,7 @@ exports.post = function(req,res) {
     fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
         if(err) return res.send("Write file error")
 
-        return res.redirect("/instructors")
+        return res.redirect(`/instructors/${id}`)
     })
 
     // return res.send(req.body)
@@ -76,5 +74,14 @@ exports.edit = function(req,res) {
 
     if(!foundInstructor) return res.send("Instructor not found!")
 
-    return res.render('instructors/edit', { instructor: foundInstructor })
+
+    const instructor = {
+        ...foundInstructor,
+        birth: date(foundInstructor.birth)
+        
+    }
+    console.log(foundInstructor.birth)
+
+
+    return res.render('instructors/edit', { instructor })
 }
