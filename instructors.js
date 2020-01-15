@@ -4,7 +4,7 @@ const { age, date } = require('./utils')
 const Intl = require('intl')
 
 // show
-exports.show = function(req,res) {
+exports.show = function(req, res) {
     // req.params
     const { id } = req.params
 
@@ -25,7 +25,7 @@ exports.show = function(req,res) {
 }
 
 // create
-exports.post = function(req,res) {
+exports.post = function(req, res) {
     
     const keys = Object.keys(req.body)
 
@@ -64,8 +64,8 @@ exports.post = function(req,res) {
 }
 
 // edit
-exports.edit = function(req,res) {
-
+exports.edit = function(req, res) {
+    // req.params
     const { id } = req.params
 
     const foundInstructor = data.instructors.find(function(instructor) {
@@ -84,4 +84,32 @@ exports.edit = function(req,res) {
 
 
     return res.render('instructors/edit', { instructor })
+}
+
+// put
+exports.put = function(req, res) {
+    // req.body
+    const { id } = req.body
+    console.log(data)
+
+    const foundInstructor = data.instructors.find(function(instructor) {
+        return id == instructor.id
+    })
+
+    if(!foundInstructor) return res.send("Instructor not found!")
+
+    const instructor = {
+        ...foundInstructor,
+        ...req.body,
+        birth: Date.parse(req.body.birth)
+    }
+
+    data.instructors[id -1] = instructor
+    console.log(data.instructor)
+
+    fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
+        if(err) return res.send("Write error!")
+        
+        return res.redirect(`/instructors/${id}`)
+    })
 }
