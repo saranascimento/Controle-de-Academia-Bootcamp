@@ -38,7 +38,7 @@ exports.post = function(req, res) {
         if(req.body[key] == "") {
             return res.send("Por favor, preencha todos os campos!")
         }
-            
+                
     }
 
     let { avatar_url, birth, name, services, gender } = req.body
@@ -82,10 +82,7 @@ exports.edit = function(req, res) {
     const instructor = {
         ...foundInstructor,
         birth: date(foundInstructor.birth)
-        
     }
-    console.log(foundInstructor.birth)
-
 
     return res.render('instructors/edit', { instructor })
 }
@@ -94,10 +91,13 @@ exports.edit = function(req, res) {
 exports.put = function(req, res) {
     // req.body
     const { id } = req.body
-    console.log(data)
+    let index = 0
 
-    const foundInstructor = data.instructors.find(function(instructor) {
-        return id == instructor.id
+    const foundInstructor = data.instructors.find(function(instructor, foundIndex) {
+        if (id == instructor.id) {
+            index = foundIndex
+            return true
+        }
     })
 
     if(!foundInstructor) return res.send("Instructor not found!")
@@ -105,11 +105,11 @@ exports.put = function(req, res) {
     const instructor = {
         ...foundInstructor,
         ...req.body,
-        birth: Date.parse(req.body.birth)
+        birth: Date.parse(req.body.birth),
+        id: Number(req.body.id)
     }
 
-    data.instructors[id -1] = instructor
-    console.log(data.instructor)
+    data.instructors[index] = instructor
 
     fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
         if(err) return res.send("Write error!")
