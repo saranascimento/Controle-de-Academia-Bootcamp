@@ -1,40 +1,23 @@
 {
+  "members": [],
   "instructors": [
     {
       "id": 1,
-      "name": "Sara Gomes do Nascimento Santana",
-      "avatar_url": "https://www.google.com/",
-      "birth": 1578096000000,
-      "gender": "M",
-      "services": "ssdsds",
-      "created_at": 1578414391412
+      "avatar_url": "https://images.unsplash.com/photo-1548932813-88dcf75599c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+      "name": "Sara Gomes ",
+      "birth": 781315200000,
+      "gender": "F",
+      "services": "Musculação, natação",
+      "created_at": 1579209738592
     },
     {
       "id": 2,
-      "avatar_url": "https://www.google.com/",
+      "avatar_url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
       "name": "danilo",
-      "birth": 1578009600000,
-      "gender": "M",
-      "services": "ssdsds",
-      "created_at": 1578414425798
-    },
-    {
-      "id": 3,
-      "avatar_url": "https://source.unsplash.com/collection/3465564/500x500",
-      "name": "Sara Gomes do Nascimento Santana",
-      "birth": 468115200000,
-      "gender": "M",
-      "services": "Musculação, natação, crossfit",
-      "created_at": 1578452259975
-    },
-    {
-      "id": 4,
-      "avatar_url": "https://www.google.com/",
-      "name": "Sara Gomes do Nascimento Santana",
       "birth": 719712000000,
       "gender": "M",
       "services": "Musculação, natação, crossfit",
-      "created_at": 1578703263084
+      "created_at": 1579209767552
     }
   ]
 }
