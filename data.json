@@ -1,5 +1,17 @@
 {
-  "members": [],
+  "members": [
+    {
+      "id": 1,
+      "avatar_url": "https://www.google.com/",
+      "name": "Sara Gomes ",
+      "email": "sarah.gomes80@hotmail.com",
+      "birth": 547171200000,
+      "gender": "F",
+      "blood": "A-",
+      "weight": "188",
+      "height": "155"
+    }
+  ],
   "instructors": [
     {
       "id": 1,
