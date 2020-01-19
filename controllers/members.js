@@ -1,6 +1,6 @@
 const fs = require('fs')
 const data = require('../data.json')
-const { age, date } = require('../utils')
+const { date } = require('../utils')
 const Intl = require('intl')
 
 // list data
@@ -51,7 +51,6 @@ exports.post = function(req, res) {
 
 // shows data
 exports.show = function(req, res) {
-    // req.params
     const { id } = req.params
 
     const foundMember = data.members.find(function(member) {
@@ -62,8 +61,7 @@ exports.show = function(req, res) {
 
     const member = {
         ...foundMember,
-        age: age(foundMember.birth),
-        
+        birth: date(foundMember.birth).birthDay
     }
 
     return res.render("members/show", { member })
@@ -83,7 +81,7 @@ exports.edit = function(req, res) {
 
     const member = {
         ...foundMember,
-        birth: date(foundMember.birth)
+        birth: date(foundMember.birth).iso
     }
 
     return res.render('members/edit', { member })
