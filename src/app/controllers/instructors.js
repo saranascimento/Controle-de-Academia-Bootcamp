@@ -1,10 +1,12 @@
 const { age, date } = require('../../lib/utils')
-const db = require('../../config/db')
+const instructor = require('../models/instructor')
 const Intl = require('intl')
 
 module.exports = {
     index(req, res){
-        return res.render("instructors/index")
+        instructor.all(function(instructors) {
+            return res.render("instructors/index", { instructors })
+        })  
     },
     create(req, res){
         return res.render("instructors/create")
@@ -20,34 +22,21 @@ module.exports = {
                     
         }
 
-        const query = `
-            INSERT INTO instructors (
-                name,
-                avatar_url,
-                gender,
-                services,
-                birth,
-                created_at
-            ) VALUES ($1, $2, $3, $4, $5, $6)
-            RETURNING id
-        `
-        const values = [
-            req.body.name,
-            req.body.avatar_url,
-            req.body.gender,
-            req.body.services,
-            data(req.body.birth).iso,
-            data(Date.now()).iso
-        ]
-
-        db.query(query, values, function(err, results) {
-            if(err) return res.send("Database Error!")
-
-            return res.redirect(`/instractors/${results.rows[0].id}`)
+        instructor.create(req.body, function(instructor) {
+            return res.redirect(`/instructors/${instructor.id}`)
         })
     },
     show(req, res){
-        return
+        instructor.find(req.params.id, function(instructor) {
+            if(!instructor) return res.send("Instructor not found!")
+
+            instructor.age = age(instructor.birth)
+            instructor.services = instructor.services.split(",")
+
+            instructor.created_at = date(instructor.created_at).format
+
+            return res.render("instructors/show", { instructor })
+        })
     },
     edit(req, res){
         return
@@ -58,7 +47,7 @@ module.exports = {
         for(key of keys) {
             
             if(req.body[key] == "") {
-                return res.send("Por favor, preencha todos os campos!")
+                return res.send("Please, fill all fields!")
             }
                     
         }
