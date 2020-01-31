@@ -1,10 +1,10 @@
 const { age, date } = require('../../lib/utils')
-const instructor = require('../models/instructor')
-const Intl = require('intl')
+const Instructor = require('../models/Instructor')
+
 
 module.exports = {
     index(req, res){
-        instructor.all(function(instructors) {
+        Instructor.all(function(instructors) {
             return res.render("instructors/index", { instructors })
         })  
     },
@@ -22,12 +22,12 @@ module.exports = {
                     
         }
 
-        instructor.create(req.body, function(instructor) {
+        Instructor.create(req.body, function(instructor) {
             return res.redirect(`/instructors/${instructor.id}`)
         })
     },
     show(req, res){
-        instructor.find(req.params.id, function(instructor) {
+        Instructor.find(req.params.id, function(instructor) {
             if(!instructor) return res.send("Instructor not found!")
 
             instructor.age = age(instructor.birth)
@@ -39,7 +39,7 @@ module.exports = {
         })
     },
     edit(req, res){
-        instructor.find(req.params.id, function(instructor) {
+        Instructor.find(req.params.id, function(instructor) {
             if(!instructor) return res.send("Instructor not found!")
 
             instructor.birth = age(instructor.birth).iso
@@ -60,13 +60,13 @@ module.exports = {
             }               
         }
 
-        instructor.update(req.body, function() {
+        Instructor.update(req.body, function() {
             return res.redirect(`/instructors/${req.body.id}`)
         })
 
     }, 
     delete(req, res){
-        instructor.delete(req.body.id, function() {
+        Instructor.delete(req.body.id, function() {
             return res.redirect(`/instructors`)
         })
     }
