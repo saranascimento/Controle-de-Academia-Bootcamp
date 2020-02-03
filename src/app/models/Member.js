@@ -48,7 +48,7 @@ module.exports = {
     },
     find (id, callback) {
         db.query(`
-            SELECT members,*, instructors.name AS instructor_name 
+            SELECT members.*, instructors.name AS instructor_name 
             FROM members 
             LEFT JOIN instructors ON (members.instructor_id = instructors.id )
             WHERE members.id = $1`, [id], function(err, results){
@@ -67,7 +67,7 @@ module.exports = {
             email=($5),
             blood=($6),
             weight=($7),
-            height=($8)
+            height=($8),
             instructor_id=($9)
             
         WHERE id = $10
@@ -105,5 +105,44 @@ module.exports = {
 
             callback(results.rows)
         })
-    }
+    },
+    paginate(params) {
+        const { filter, limit,  offset, callback } = params
+
+        let query = "",
+            filterQuery = "",
+            totalQuery = `
+            (
+                SELECT count(*) FROM members
+            ) AS total
+            `
+
+        
+
+        if ( filter ) {
+
+            filterQuery = `
+            WHERE members.name ILIKE '%${filter}%'
+            OR members.email ILIKE '%${filter}%'
+            `
+
+            totalQuery = `(
+                SELECT count(*) FROM members
+                ${filterQuery}
+            ) as total`
+        }
+
+        query = `
+        SELECT members.*, ${totalQuery} 
+        FROM members
+        ${filterQuery}
+        LIMIT $1 OFFSET $2
+        `
+
+        db.query(query, [limit, offset], function(err, results) {
+            if(err) throw `Database Error! ${err}`
+
+            callback(results.rows)
+        })
+    } 
 }
